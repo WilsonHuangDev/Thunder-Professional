@@ -1,0 +1,135 @@
+{
+  "name": "xmp-plugin",
+  "version": "0.0.2",
+  "author": "Xunlei",
+  "description": "",
+  "license": "",
+  "main": "./out/main.js",
+  "scripts": {
+    "lint": "npm run tslint",
+    "tslint": "tslint --project ./",
+    "dll": "webpack --config build/webpack.dll.config.js",
+    "debug": "node build/build.js",
+    "prerelease": "cross-env BIN_TARGET=Release npm run dll",
+    "preproduct-release": "cross-env BUILD_ENV=production BIN_TARGET=ProductRelease npm run dll",
+    "release": "cross-env BIN_TARGET=Release node build/build.js",
+    "product-release": "cross-env BUILD_ENV=production BIN_TARGET=ProductRelease node build/build.js",
+    "deploy-release": "cross-env BIN_TARGET=Release node build/deploy.js",
+    "deploy-product-release": "cross-env BUILD_ENV=production BIN_TARGET=ProductRelease node build/deploy.js",
+    "test": "jest",
+    "pre-commit": "",
+    "prea": "cross-env ANALYZE=1 npm run release",
+    "a": "webpack-bundle-analyzer stats.json",
+    "postbuild": "cross-env BIN_TARGET=ProductRelease node build/compression.js",
+    "start-release": "cd ../../../../bin/Release && Thunder.exe"
+  },
+  "dependencies": {
+    "@xunlei/async-remote": "^2.1.12-dev",
+    "@xunlei/node-net-ipc": "^1.0.22",
+    "@xunlei/sget": "^1.0.3",
+    "@xunlei/thunder-ui": "^0.20.8",
+    "@xunlei/thunder-ui-vue": "^0.33.3",
+    "@xunlei/thunderx-login-main": "^1.0.2",
+    "@xunlei/tiny-logger": "^1.3.0",
+    "@xunlei/vip": "^1.1.1",
+    "@xunlei/vuex-connector": "^0.3.1",
+    "ali-oss": "^6.3.1",
+    "async-validator": "^1.8.5",
+    "axios": "^0.18.0",
+    "babel-helper-vue-jsx-merge-props": "^2.0.3",
+    "compressing": "^1.5.1",
+    "html-webpack-plugin": "github:jantimon/html-webpack-plugin",
+    "jszip": "^3.1.5",
+    "qrcode": "^1.4.4",
+    "vue": "^2.5.17",
+    "vue-property-decorator": "^6.1.0",
+    "vuex": "^3.0.1",
+    "xml2js": "^0.4.19"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/jest": "^22.2.2",
+    "@types/jszip": "^3.1.4",
+    "@types/xml2js": "^0.4.3",
+    "@vue/test-utils": "^1.0.0-beta.24",
+    "@xunlei/pre-commit": "^1.2.3",
+    "archiver": "^5.0.2",
+    "chalk": "^2.4.1",
+    "circular-dependency-plugin": "^5.0.2",
+    "copy-webpack-plugin": "^4.5.2",
+    "cross-env": "^5.2.0",
+    "css-loader": "^1.0.0",
+    "del": "^3.0.0",
+    "devtron": "^1.4.0",
+    "electron": "^9.2.1",
+    "electron-debug": "^1.4.0",
+    "electron-devtools-installer": "^2.2.4",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^1.1.11",
+    "fork-ts-checker-webpack-plugin": "^0.4.8",
+    "jest": "^22.4.4",
+    "jest-serializer-vue": "^1.0.0",
+    "multispinner": "^0.2.1",
+    "node-loader": "^0.6.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "source-map-loader": "^0.2.4",
+    "stats-webpack-plugin": "^0.7.0",
+    "style-loader": "^0.18.2",
+    "ts-jest": "^22.4.6",
+    "ts-loader": "^4.4.2",
+    "tslint": "^5.11.0",
+    "tslint-config-standard": "^7.1.0",
+    "tslint-loader": "^3.6.0",
+    "typescript": "^3.1.6",
+    "uglifyjs-webpack-plugin": "^1.3.0",
+    "url-loader": "^1.1.0",
+    "vrsource-tslint-rules": "^5.8.2",
+    "vue-html-loader": "^1.2.4",
+    "vue-jest": "^2.6.0",
+    "vue-loader": "^15.3.0",
+    "vue-style-loader": "^3.0.1",
+    "vue-template-compiler": "^2.5.17",
+    "webpack": "^4.16.5",
+    "webpack-bundle-analyzer": "^3.0.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-middleware": "^3.1.3",
+    "webpack-dev-server": "^3.1.5",
+    "webpack-hot-middleware": "^2.22.3",
+    "webpack-merge": "^4.1.4"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json",
+      "vue"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "transform": {
+      "^.+\\.ts$": "<rootDir>/build/preprocessor.js",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+    },
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/jest-serializer-vue"
+    ],
+    "testRegex": "(/__tests__/.*|(\\.|/)(spec))\\.(js|ts)$",
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/(?!vue)"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "collectCoverage": false,
+    "collectCoverageFrom": [
+      "src/**.{js,vue}",
+      "!**/node_modules/**",
+      "!src/main/index.dev.js",
+      "!**/build/**"
+    ]
+  },
+  "build": {
+    "outDir": "../dist/"
+  }
+}

@@ -1,0 +1,167 @@
+<script language="javascript">
+
+
+function AddLink(Url,Info,Location,strCID,strStatUrl,strCookie,strCharset)
+{
+	if (Url != "")
+	{
+		if (Info == "")
+		{
+			Info = "unknown";
+		}
+
+		try
+		{
+			var ThunderAgent = new ActiveXObject("ThunderAgent.Agent");
+		}
+		catch(e)
+		{
+			ThunderAgent = new ActiveXObject("ThunderAgent.Agent64");
+		}
+
+		try
+		{
+			ThunderAgent.AddTask12(Url, "", "", Info, Location, strCharset, -1, 0, -1,  strCookie, strCID, strStatUrl, 0, "rightup");
+		}
+		catch(e)
+		{
+			try
+			{
+				ThunderAgent.AddTask5(Url, "", "", Info, Location, -1, 0, -1,  strCookie, strCID, strStatUrl, 1, "", -1);
+			}	
+			catch(e)
+			{
+				ThunderAgent.AddTask2(Url, "", "", Info, Location, -1, 0, -1,  strCookie);
+			}
+		}
+
+		ThunderAgent.CommitTasks2(1);
+	}
+}
+
+function OnContextMenu()
+{
+	var srcEvent = external.menuArguments.event;
+	var EventElement = external.menuArguments.event.srcElement;
+	
+	if(typeof(EventElement) == "undefined")
+	{
+		if(typeof(srcEvent.clientX) == "undefined")
+		{
+			EventElement = external.menuArguments.document.elementFromPoint ( srcEvent.pointerX, srcEvent.pointerY );
+		}
+		else
+		{
+			EventElement = external.menuArguments.document.elementFromPoint ( srcEvent.clientX, srcEvent.clientY );
+		}
+	}
+		
+		
+
+	var strDownloadPage = external.menuArguments.location;
+	var theDownloadPage = external.menuArguments.document.getElementById("thunder_down_pageurl");
+	var strCharSet = external.menuArguments.document.charset;
+	if (theDownloadPage != null)
+	{
+		strDownloadPage = theDownloadPage.value;
+	}
+	
+
+	var strStatPage = "";
+	var theStatPage = external.menuArguments.document.getElementById("thunder_stat_pageurl");
+	if (theStatPage != null)
+	{
+		strStatPage = theStatPage.value;
+	}
+
+	var strCID = ""
+	var theCID = external.menuArguments.document.getElementById("thunder_cid");
+	if (theCID != null)
+	{
+		strCID = theCID.value;
+	}
+	var srcAnchor;
+
+	if (srcEvent.type == "MenuExtAnchor")
+	{
+
+		srcAnchor = EventElement;
+
+		do
+		{ 
+			srcAnchor=srcAnchor.parentElement;
+		}while(typeof(srcAnchor)=="HTMLAnchorElement");
+		
+		AddLink(srcAnchor.href,srcAnchor.innerText,strDownloadPage, strCID, strStatPage,external.menuArguments.document.cookie,strCharSet);
+	}
+	else if (srcEvent.type == "MenuExtImage")
+	{
+		if (typeof(EventElement) == "HTMLAreaElement")
+		{
+			AddLink(EventElement.href,EventElement.Alt,strDownloadPage, strCID, strStatPage,external.menuArguments.document.cookie,strCharSet);
+		}
+		else 
+		{
+			var srcImage = EventElement;
+			var srcAnchor = srcImage.parentElement;
+			do
+			{ 
+				srcAnchor=srcAnchor.parentElement;
+				if (typeof(srcAnchor) == "undefined")
+				{
+					AddLink(srcImage.href,srcImage.Alt,strDownloadPage, strCID, strStatPage,external.menuArguments.document.cookie,strCharSet);
+					return;
+				}
+			}while(typeof(srcAnchor) == "HTMLAnchorElement");
+			AddLink(srcAnchor.href,srcImage.Alt,strDownloadPage, strCID, strStatPage,strCharSet);
+		}
+	}	
+	else if (srcEvent.type == "MenuExtUnknown")
+	{
+	srcAnchor = EventElement;
+	if(srcAnchor != null && srcAnchor.tagName != null && srcAnchor.tagName.toLowerCase() == "a")
+	    {
+         try
+		{
+		    AddLink(srcAnchor.href,srcAnchor.innerText,strDownloadPage, strCID, strStatPage,external.menuArguments.document.cookie,strCharSet);
+		}
+		catch(e)
+		{
+		   alert("网页数据格式错误，无法下载，请尝试用鼠标左键点击下载。");
+		}
+	    }
+	    else
+	    {
+	        while(srcAnchor != null && srcAnchor.tagName != null && srcAnchor.tagName.toLowerCase() != "a")
+	        {
+	            srcAnchor = srcAnchor.parentElement;
+	            if(srcAnchor != null && srcAnchor.tagName != null && srcAnchor.tagName.toLowerCase() == "a")
+	            {
+	                AddLink(srcAnchor.href,srcAnchor.innerText,strDownloadPage, strCID, strStatPage,external.menuArguments.document.cookie,strCharSet);
+	                return;
+	            }
+	        }
+			
+	        if(EventElement != null && EventElement.tagName != null)
+	        {
+	            AddLink(EventElement.href,EventElement.innerText,strDownloadPage, strCID, strStatPage,external.menuArguments.document.cookie,strCharSet);
+	        }
+	        else
+	        {
+	            alert("无法识别的超级链接信息");
+	        }
+	    }
+	}
+	else
+	{
+		
+	}
+}
+
+
+
+
+OnContextMenu();
+
+</script>
+

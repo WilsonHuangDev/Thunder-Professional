@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta property="qc:admins" content="254750776656451637574771660454" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>迅雷个人中心-登录</title>
+    <link rel="stylesheet" href="css/xlx-login-wrap.css" />
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        position: relative;
+        width: 100%;
+        height: 440px;
+        overflow: hidden;
+      }
+      #left-box,
+      #right-box {
+        width: 50%;
+        height: 100%;
+        float: left;
+      }
+      #xl_login,
+      #loginIframe {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+			}
+			/* .xlx-login-wrap{
+				box-shadow: 0 0 5px rgba(0,0,0,.2);
+			} */
+    </style>
+    <script type="text/javascript">
+      document.addEventListener(
+        "dragover",
+        (event) => {
+          event.preventDefault();
+        },
+        false
+      );
+      document.addEventListener(
+        "drop",
+        (event) => {
+          event.preventDefault();
+        },
+        false
+      );
+    </script>
+    <script
+      type="text/javascript"
+      src="xreport.js"
+      febug="true"
+      server="xluser-web-login-fail"
+    ></script>
+    <script type="text/javascript" src="qLogin.min.js"></script>
+    <script type="text/javascript" src="xdas.js"></script>
+  </head>
+  <body>
+    <div class="xlx-login-wrap">
+		<div id="left-box" class="xlx-login-code">
+			<h1>扫码登录 更安全</h1>
+			<p>打开 <a href="#">手机迅雷APP</a> 扫一扫登录</p>
+			<div id="xlx-code-box" class="xlx-code-box">
+				<img id="xlx-code-img" src="" alt="">
+				<div id="xlx-code-img-mask" class="xlx-code-box__mask" style="display: none;">
+					<i id="xlx-code-img-mask-icon" class="login-icon-success"></i>
+					<p id="xlx-code-img-mask-text">扫码成功<br>请在手机端确认登录</p>
+				</div>
+      </div>
+      <p id="xlx-code-status-text" class="xlx-code-status" style="display: none;">二维码已失效</p>
+		</div>
+		<div id="right-box" style="position: relative;z-index: 2;">
+			<div class="bd" id="xl_login"></div>
+		</div>
+    </div>
+    <div
+      class="drag"
+      id="drag-menu"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0px;
+        width: 570px;
+        height: 30px;
+        z-index: 99999;
+				opacity: 0;
+      "
+    >
+      <p
+        style="
+          width: 570px;
+          height: 100%;
+          -webkit-app-region: drag;
+          position: relative;
+          left: 5px;
+        "
+      ></p>
+    </div>
+  </body>
+</html>

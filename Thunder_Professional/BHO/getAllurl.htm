@@ -1,0 +1,86 @@
+<script language="VBScript">
+
+Sub OnContextMenu()
+	on error resume next
+	set ThunderAgent = CreateObject("ThunderAgent.Agent.1")
+	if err.number <> 0 then
+		On Error Goto 0
+		set ThunderAgent = CreateObject("ThunderAgent.Agent64.1")
+	end if 
+
+	If ThunderAgent.ConfirmRectMode = 0 Then
+		set links = external.menuArguments.document.links
+		set images = external.menuArguments.document.images
+		set strCharSet = external.menuArguments.document.charset
+		link_count = links.length
+		image_count = images.length
+		
+		On Error Resume Next
+
+		strDownloadPage = external.menuArguments.document.url
+		set theDownloadPage = external.menuArguments.document.getElementById("thunder_down_pageurl")
+		if TypeName(theDownloadPage) <> "Nothing" then
+			strDownloadPage = theDownloadPage.value
+		end if
+
+		strStatPage = ""
+		set theStatPage = external.menuArguments.document.getElementById("thunder_stat_pageurl")
+		if TypeName(theStatPage) <> "Nothing" then
+			strStatPage = theStatPage.value
+		end if
+
+		On Error Goto 0
+
+		if strStatPage <> "" then
+			for i = 0 to link_count-1
+				On Error Resume Next
+				call ThunderAgent.AddTask12(links(i).href, "", "", links(i).innerText, strDownloadPage, strCharset, -1, 0, -1,  external.menuArguments.document.cookie, "", strStatPage, 0, "rightup")
+				if err.number <> 0 then
+					On Error Goto 0
+					call ThunderAgent.AddTask4(links(i).href, "", "", links(i).innerText, strDownloadPage, -1, 0, -1, external.menuArguments.document.cookie, "", strStatPage)
+				end if
+				On Error Resume Next
+			next 
+			
+			for i = 0 to image_count-1
+				On Error Resume Next	
+				call ThunderAgent.AddTask12(images(i).src, "", "", images(i).innerText, strDownloadPage, strCharset, -1, 0, -1,  external.menuArguments.document.cookie, "", strStatPage, 0, "rightup")
+				if err.number <> 0 then
+					On Error Goto 0
+					call ThunderAgent.AddTask4(images(i).src, "", "", images(i).innerText, strDownloadPage, -1, 0, -1, external.menuArguments.document.cookie, "", strStatPage)
+				end if
+				On Error Resume Next
+			next
+		else
+			for i = 0 to link_count-1
+				On Error Resume Next	
+				call ThunderAgent.AddTask12(links(i).href, "", "", links(i).innerText, strDownloadPage, strCharset, -1, 0, -1,  external.menuArguments.document.cookie, "", "", 0, "rightup")
+				if err.number <> 0 then
+					On Error Goto 0
+					call ThunderAgent.AddTask4(links(i).href, "", "", links(i).innerText, strDownloadPage, -1, 0, -1, external.menuArguments.document.cookie, "", "")
+				end if
+				On Error Resume Next
+			next 
+			
+			for i = 0 to image_count-1
+				On Error Resume Next
+				call ThunderAgent.AddTask12(images(i).src, "", "", images(i).innerText, strDownloadPage, strCharset, -1, 0, -1,  external.menuArguments.document.cookie, "", "", 0, "rightup")
+				if err.number <> 0 then
+					On Error Goto 0
+					call ThunderAgent.AddTask4(images(i).src, "", "", images(i).innerText, strDownloadPage, -1, 0, -1, external.menuArguments.document.cookie, "", "")
+				end if
+				On Error Resume Next
+			next
+		end if
+
+		call ThunderAgent.CommitTasks2(1)
+	Else
+		ThunderAgent.AddTaskInRect()
+	End If
+
+	set ThunderAgent = nothing
+end sub
+
+call OnContextMenu()
+
+</script>

@@ -1,0 +1,10 @@
+{
+  "name": "vip-renew-button",
+  "version": "3.0.1",
+  "author": "Xunlei",
+  "license": "",
+  "description": "",
+  "main": "3.0.1/index.js",
+  "clear": true,
+  "owner": "vip-plugin-controller"
+}

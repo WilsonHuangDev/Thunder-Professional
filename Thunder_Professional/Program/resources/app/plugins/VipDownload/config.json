@@ -1,0 +1,9 @@
+{
+  "name": "vip-download",
+  "version": "4.4.0",
+  "author": "Xunlei",
+  "license": "",
+  "description": "",
+  "main": "4.4.0/index.js",
+  "clear": true
+}

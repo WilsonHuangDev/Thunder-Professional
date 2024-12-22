@@ -1,0 +1,9 @@
+{
+  "name": "vip-plugin-controller",
+  "version": "2.0.1",
+  "author": "Xunlei",
+  "license": "",
+  "description": "",
+  "main": "2.0.1/index.js",
+  "clear": true
+}

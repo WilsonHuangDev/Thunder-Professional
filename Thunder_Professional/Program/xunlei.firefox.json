@@ -1,0 +1,9 @@
+{
+  "name": "com.xunlei.thunder",
+  "description": "FireFox Native Messaging API Thunder Host",
+  "path": "xl_ext_chrome.exe",
+  "type": "stdio",
+  "allowed_extensions": [
+    "xl_webbrowserstore@xunlei.com"
+  ]
+}

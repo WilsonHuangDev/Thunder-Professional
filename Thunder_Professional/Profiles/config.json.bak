@@ -1,0 +1,97 @@
+{
+  "Consumption": {
+    "ShowMainWindowTime": 1734523278071,
+    "HideMainWindowTime": 1734527139563
+  },
+  "BossKey": {
+    "BossKeyState": false
+  },
+  "TaskDefaultSettings": {
+    "InitPath": "D:\\迅雷下载",
+    "DefaultPath": "D:\\迅雷下载",
+    "UseLastCatalog": false
+  },
+  "ConfigNormalSession": {
+    "ConfigNormal_AutoRun": false
+  },
+  "GenericSettings": {
+    "CheckCpu": 1,
+    "AnimationLevel": "1"
+  },
+  "FlowMonitor": {
+    "DownloadSize": 28290187,
+    "UploadSize": 410685,
+    "Date": "2024.12.18"
+  },
+  "Motitor": {
+    "MotitorIE浏览器": 0,
+    "MotitorAll": false
+  },
+  "ConfigNet": {
+    "ConfigNet_Type": "1"
+  },
+  "VipDownload": {
+    "TpPeerId": "84A93E82AA5BN5EU",
+    "ShowTeamEnteranceCount": 2,
+    "ShowTeamEnteranceLastDate": "Wed Dec 18 2024",
+    "TeamEnteranceSwitch": true
+  },
+  "ThunderPanPlugin": {
+    "defaultDownloadPath": "D:\\迅雷云盘"
+  },
+  "ConfigSuspensionXdas": {
+    "SuspensionX": 1420,
+    "SuspensionY": -160
+  },
+  "SearchBar": {
+    "EnableAssociativeWord": 1,
+    "SearchSuffix": "mp4,高清,蓝光,720p,4k,avi",
+    "FavoritesTip": false
+  },
+  "LoginWndAutoShow": {
+    "Date": "20241218"
+  },
+  "XLUpdate": {
+    "ShowMainUpdateIcon": false
+  },
+  "downloadDetectTools": {
+    "autoDetectDate": "2024-12-18"
+  },
+  "ConfigFloatPanel": {
+    "FloatPanelValue": "2"
+  },
+  "Monitor": {
+    "WatchTraditionLink": false,
+    "ConfigWatch_Bt": false,
+    "MonitorClipBoard": false
+  },
+  "EMuleGenericSettings": {
+    "EMuleWatchLink": false
+  },
+  "MagnetGenericSettings": {
+    "MagnetWatchLink": false
+  },
+  "UserCommunitySet": {
+    "radio_id_": false
+  },
+  "BtGenericSettings": {
+    "AssocTorrent": false
+  },
+  "ProxySetting": {
+    "ConfigProxy_Type": "1"
+  },
+  "CreateDesktopIcon": {
+    "Cancel": true
+  },
+  "ConfigMsg": {
+    "ConfigMsg_Finish": false,
+    "ConfigMsg_FailSuggest": false,
+    "ConfigMsg_PlayWaveWhileFinish": false
+  },
+  "CompletedTaskPlay": {
+    "LanuchMediaPlayer": "2"
+  },
+  "PersonalInfo": {
+    "PeeridMatchNum": 15
+  }
+}
