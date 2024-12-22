@@ -1,0 +1,8 @@
+# Temporary files
+*.tmp
+*.log
+*.log.*
+
+# Visual Studio
+.vs/
+*.sln
