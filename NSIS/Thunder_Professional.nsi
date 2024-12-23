@@ -1,54 +1,54 @@
-; ¸Ã½Å±¾Ê¹ÓÃ HM VNISEdit ½Å±¾±à¼­Æ÷Ïòµ¼²úÉú
-
-; °²×°³ÌĞò³õÊ¼¶¨Òå³£Á¿
-!define PRODUCT_NAME "Ñ¸À××¨Òµ°æ"
+ï»¿; å®‰è£…ç¨‹åºåˆå§‹å®šä¹‰å¸¸é‡
+!define PRODUCT_NAME "è¿…é›·ä¸“ä¸šç‰ˆ"
 !define PRODUCT_VERSION "12.1.2.2662"
-!define PRODUCT_PUBLISHER "ÉîÛÚÊĞÑ¸À×ÍøÂç¼¼ÊõÓĞÏŞ¹«Ë¾"
+!define PRODUCT_PUBLISHER "æ·±åœ³å¸‚è¿…é›·ç½‘ç»œæŠ€æœ¯æœ‰é™å…¬å¸"
 !define PRODUCT_WEB_SITE "https://www.xunlei.com/"
-!define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\APlayer.exe"
+!define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\Thunder.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
+Unicode True
 SetCompressor lzma
 
-; ------ MUI ÏÖ´ú½çÃæ¶¨Òå (1.67 °æ±¾ÒÔÉÏ¼æÈİ) ------
+; ------ MUI ç°ä»£ç•Œé¢å®šä¹‰ (1.67 ç‰ˆæœ¬ä»¥ä¸Šå…¼å®¹) ------
 !include "MUI.nsh"
 
-; MUI Ô¤¶¨Òå³£Á¿
+; MUI é¢„å®šä¹‰å¸¸é‡
 !define MUI_ABORTWARNING
 !define MUI_ICON "Thunder_Professional\Program\Thunder11.ico"
 !define MUI_UNICON "Thunder_Professional\Program\Thunder11.ico"
-;ĞŞ¸Ä×ó²àÍ¼Æ¬
+;ä¿®æ”¹å·¦ä¾§å›¾ç‰‡
 !define MUI_WELCOMEFINISHPAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Wizard\nsis3-metro.bmp"
-!define MUI_UNWELCOMEFINISHPAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Wizard\nsis3-grey.bmp"
+!define MUI_UNWELCOMEFINISHPAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Wizard\nsis3-metro.bmp"
 
-; »¶Ó­Ò³Ãæ
+; æ¬¢è¿é¡µé¢
 !insertmacro MUI_PAGE_WELCOME
-; °²×°Ä¿Â¼Ñ¡ÔñÒ³Ãæ
+; å®‰è£…ç›®å½•é€‰æ‹©é¡µé¢
 !insertmacro MUI_PAGE_DIRECTORY
-; °²×°¹ı³ÌÒ³Ãæ
+; å®‰è£…è¿‡ç¨‹é¡µé¢
 !insertmacro MUI_PAGE_INSTFILES
-; °²×°Íê³ÉÒ³Ãæ
+; å®‰è£…å®Œæˆé¡µé¢
 !define MUI_FINISHPAGE_RUN "$INSTDIR\Program\Thunder.exe"
 !insertmacro MUI_PAGE_FINISH
 
-; °²×°Ğ¶ÔØ¹ı³ÌÒ³Ãæ
+; å®‰è£…å¸è½½è¿‡ç¨‹é¡µé¢
 !insertmacro MUI_UNPAGE_INSTFILES
 
-; °²×°½çÃæ°üº¬µÄÓïÑÔÉèÖÃ
+; å®‰è£…ç•Œé¢åŒ…å«çš„è¯­è¨€è®¾ç½®
+!insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "SimpChinese"
 
-; °²×°Ô¤ÊÍ·ÅÎÄ¼ş
+; å®‰è£…é¢„é‡Šæ”¾æ–‡ä»¶
 !insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
 
-;±àĞ´Macro£¬ÓÃÓÚÅĞ¶Ï°²×°»òĞ¶ÔØ³ÌĞòÊ±Ö¸¶¨³ÌĞòÊÇ·ñÔÚÔËĞĞ£¬²¢ÌáÊ¾ÊÇ·ñÇ¿ÖÆ¹Ø±Õ¼ÌĞø°²×°
+;ç¼–å†™Macroï¼Œç”¨äºåˆ¤æ–­å®‰è£…æˆ–å¸è½½ç¨‹åºæ—¶æŒ‡å®šç¨‹åºæ˜¯å¦åœ¨è¿è¡Œï¼Œå¹¶æç¤ºæ˜¯å¦å¼ºåˆ¶å…³é—­ç»§ç»­å®‰è£…
 !macro FindProcessAndKill
     StrCpy $1 "Thunder.exe"
     nsProcess::_FindProcess "$1"
     Pop $R0
     ${If} $R0 = 0
           MessageBox MB_OKCANCEL|MB_ICONQUESTION   \
-                     "°²×°³ÌĞò¼ì²âµ½ ${PRODUCT_NAME} ÕıÔÚÔËĞĞ¡£$\r$\n$\r$\nµã»÷ ¡°È·¶¨¡± Ç¿ÖÆ¹Ø±Õ${PRODUCT_NAME}£¬¼ÌĞø°²×°¡£$\r$\n$\r$\nµã»÷ ¡°È¡Ïû¡± ÍË³ö°²×°³ÌĞò¡£" \
+                     "å®‰è£…ç¨‹åºæ£€æµ‹åˆ° ${PRODUCT_NAME} æ­£åœ¨è¿è¡Œã€‚$\r$\n$\r$\nç‚¹å‡» â€œç¡®å®šâ€ å¼ºåˆ¶å…³é—­${PRODUCT_NAME}ï¼Œç»§ç»­å®‰è£…ã€‚$\r$\n$\r$\nç‚¹å‡» â€œå–æ¶ˆâ€ é€€å‡ºå®‰è£…ç¨‹åºã€‚" \
                      /SD IDOK IDOK label_ok IDCANCEL label_cancel
           label_ok:
                    nsProcess::_KillProcess "Thunder.exe"
@@ -59,10 +59,10 @@ SetCompressor lzma
     end:
 !macroend
 
-; ------ MUI ÏÖ´ú½çÃæ¶¨Òå½áÊø ------
+; ------ MUI ç°ä»£ç•Œé¢å®šä¹‰ç»“æŸ ------
 
 Name "${PRODUCT_NAME}"
-OutFile "ThunderProfessional12.1.2.2662_Setup.exe"
+OutFile "ThunderProfessional_12.1.2.2662_Setup.exe"
 InstallDir "$PROGRAMFILES\Thunder Network\Thunder_Professional"
 InstallDirRegKey HKLM "${PRODUCT_UNINST_KEY}" "UninstallString"
 ShowInstDetails show
@@ -108,10 +108,10 @@ Section "Main" SEC01
   SetOutPath "$INSTDIR\Profiles\xlaccount"
   File "Thunder_Professional\Profiles\xlaccount\accountdata.dat"
   SetOutPath "$INSTDIR\Program"
-  File "Thunder_Professional\Program\APlayer.dll"
-  CreateDirectory "$SMPROGRAMS\Ñ¸À××¨Òµ°æ"
-  CreateShortCut "$SMPROGRAMS\Ñ¸À××¨Òµ°æ\Ñ¸À××¨Òµ°æ.lnk" "$INSTDIR\Program\Thunder.exe"
-  CreateShortCut "$DESKTOP\Ñ¸À××¨Òµ°æ.lnk" "$INSTDIR\Program\Thunder.exe"
+  File "Thunder_Professional\Program\Thunder.exe"
+  CreateDirectory "$SMPROGRAMS\è¿…é›·ä¸“ä¸šç‰ˆ"
+  CreateShortCut "$SMPROGRAMS\è¿…é›·ä¸“ä¸šç‰ˆ\è¿…é›·ä¸“ä¸šç‰ˆ.lnk" "$INSTDIR\Program\Thunder.exe"
+  CreateShortCut "$DESKTOP\è¿…é›·ä¸“ä¸šç‰ˆ.lnk" "$INSTDIR\Program\Thunder.exe"
   File "Thunder_Professional\Program\atl90.dll"
   SetOutPath "$INSTDIR\Program\codecs"
   File "Thunder_Professional\Program\codecs\ac3file.dll"
@@ -984,7 +984,7 @@ Section "Main" SEC01
   File "Thunder_Professional\Program\ssleay32.dll"
   File "Thunder_Professional\Program\stat.dat"
   File "Thunder_Professional\Program\tdshareddata.dll"
-  File "Thunder_Professional\Program\Thunder.exe"
+  File "Thunder_Professional\Program\APlayer.dll"
   File "Thunder_Professional\Program\Thunder11.ico"
   File "Thunder_Professional\Program\TorrentFile.ico"
   File "Thunder_Professional\Program\v8_context_snapshot.bin"
@@ -1002,7 +1002,7 @@ SectionEnd
 
 Section -AdditionalIcons
   SetOutPath $INSTDIR
-  CreateShortCut "$SMPROGRAMS\Ñ¸À××¨Òµ°æ\Ğ¶ÔØ.lnk" "$INSTDIR\uninst.exe"
+  CreateShortCut "$SMPROGRAMS\è¿…é›·ä¸“ä¸šç‰ˆ\å¸è½½.lnk" "$INSTDIR\uninst.exe"
 SectionEnd
 
 Section -Post
@@ -1010,14 +1010,14 @@ Section -Post
   WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" "$INSTDIR\Program\Thunder.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayName" "$(^Name)"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\uninst.exe"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\Program\Thunder.exe"
+  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\Program\Thunder11.ico"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
 SectionEnd
 
 /******************************
- *  ÒÔÏÂÊÇ°²×°³ÌĞòµÄĞ¶ÔØ²¿·Ö  *
+ *  ä»¥ä¸‹æ˜¯å®‰è£…ç¨‹åºçš„å¸è½½éƒ¨åˆ†  *
  ******************************/
 
 Section Uninstall
@@ -1817,11 +1817,11 @@ Section Uninstall
   Delete /REBOOTOK "$APPDATA\..\APlayerCodecs3.exe.xltd"
   Delete /REBOOTOK "$APPDATA\..\APlayerCodecs3.exe.xltd.cfg"
 
-  Delete "$SMPROGRAMS\Ñ¸À××¨Òµ°æ\Ğ¶ÔØ.lnk"
-  Delete "$DESKTOP\Ñ¸À××¨Òµ°æ.lnk"
-  Delete "$SMPROGRAMS\Ñ¸À××¨Òµ°æ\Ñ¸À××¨Òµ°æ.lnk"
+  Delete "$SMPROGRAMS\è¿…é›·ä¸“ä¸šç‰ˆ\å¸è½½.lnk"
+  Delete "$DESKTOP\è¿…é›·ä¸“ä¸šç‰ˆ.lnk"
+  Delete "$SMPROGRAMS\è¿…é›·ä¸“ä¸šç‰ˆ\è¿…é›·ä¸“ä¸šç‰ˆ.lnk"
 
-  RMDir /r /REBOOTOK "$SMPROGRAMS\Ñ¸À××¨Òµ°æ"
+  RMDir /r /REBOOTOK "$SMPROGRAMS\è¿…é›·ä¸“ä¸šç‰ˆ"
   RMDir /r /REBOOTOK "$INSTDIR\Program\resources\bin\SDK\xar"
   RMDir /r /REBOOTOK "$INSTDIR\Program\resources\bin\SDK"
   RMDir /r /REBOOTOK "$INSTDIR\Program\resources\bin"
@@ -1937,7 +1937,7 @@ Section Uninstall
   SetAutoClose true
 SectionEnd
 
-#-- ¸ù¾İ NSIS ½Å±¾±à¼­¹æÔò£¬ËùÓĞ Function Çø¶Î±ØĞë·ÅÖÃÔÚ Section Çø¶ÎÖ®ºó±àĞ´£¬ÒÔ±ÜÃâ°²×°³ÌĞò³öÏÖÎ´¿ÉÔ¤ÖªµÄÎÊÌâ¡£--#
+#-- æ ¹æ® NSIS è„šæœ¬ç¼–è¾‘è§„åˆ™ï¼Œæ‰€æœ‰ Function åŒºæ®µå¿…é¡»æ”¾ç½®åœ¨ Section åŒºæ®µä¹‹åç¼–å†™ï¼Œä»¥é¿å…å®‰è£…ç¨‹åºå‡ºç°æœªå¯é¢„çŸ¥çš„é—®é¢˜ã€‚--#
 
 Var UNINSTALL_PROG
 
@@ -1947,38 +1947,37 @@ Function .onInit
   IfErrors done
 
   MessageBox MB_YESNO|MB_ICONQUESTION \
-    "¼ì²âµ½ÒÑ¾­°²×°ÁË ${PRODUCT_NAME}¡£\
-    $\n$\nÊÇ·ñÏÈĞ¶ÔØÒÑ°²×°µÄ°æ±¾£¿" \
+    "æ£€æµ‹åˆ°å·²ç»å®‰è£…äº† $(^Name) ã€‚\
+    $\n$\næ˜¯å¦å…ˆå¸è½½å·²å®‰è£…çš„ç‰ˆæœ¬ï¼Ÿ" \
       /SD IDYES \
       IDYES uninstall \
       IDNO cancel
-  Quit
+  Abort
 
 uninstall:
-  CreateDirectory $TEMP
-  CopyFiles $UNINSTALL_PROG "$TEMP\uninst.exe"
+  CreateDirectory "$TEMP"
+  CopyFiles "$UNINSTALL_PROG" "$TEMP"
 
-  ExecWait '"$TEMP\uninst.exe" _?=$TEMP' $0
+  ExecWait '"$TEMP\uninst.exe" _?=$INSTDIR' $0
   DetailPrint "uninst.exe returned $0"
   Delete "$TEMP\uninst.exe"
   Goto done
 
 cancel:
-  MessageBox MB_ICONSTOP|MB_OK "$(^Name) ÒÑÈ¡Ïû°²×°¡£"
-  Quit
+  MessageBox MB_ICONSTOP|MB_OK "$(^Name) å·²å–æ¶ˆå®‰è£…ã€‚"
+  Abort
 
 done:
 FunctionEnd
 
 Function un.onInit
-	;¼ì²éÖ¸¶¨³ÌĞòÊÇ·ñÔÚÔËĞĞ
+	;æ£€æŸ¥æŒ‡å®šç¨‹åºæ˜¯å¦åœ¨è¿è¡Œ
   !insertmacro FindProcessAndKill
-  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "ÄúÈ·ÊµÒªÍêÈ«ÒÆ³ı $(^Name) £¬¼°ÆäËùÓĞµÄ×é¼ş£¿" IDYES +2
+  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "æ‚¨ç¡®å®è¦å®Œå…¨ç§»é™¤ $(^Name) ï¼ŒåŠå…¶æ‰€æœ‰çš„ç»„ä»¶ï¼Ÿ" IDYES +2
   Abort
 FunctionEnd
 
 Function un.onUninstSuccess
   HideWindow
-  MessageBox MB_ICONINFORMATION|MB_OK "$(^Name) ÒÑ³É¹¦µØ´ÓÄúµÄ¼ÆËã»úÒÆ³ı¡£"
+  MessageBox MB_ICONINFORMATION|MB_OK "$(^Name) å·²æˆåŠŸåœ°ä»æ‚¨çš„è®¡ç®—æœºç§»é™¤ã€‚"
 FunctionEnd
-
