@@ -1971,7 +1971,7 @@ done:
 FunctionEnd
 
 Function un.onInit
-	;检查指定程序是否在运行
+  ;检查指定程序是否在运行
   !insertmacro FindProcessAndKill
   MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "您确实要完全移除 $(^Name) ，及其所有的组件？" IDYES +2
   Abort
