@@ -13,68 +13,37 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
-    - name: Set up 32-bit Python
-      uses: actions/setup-python@v5.3.0
-      with:
-        python-version: '3.8.10'
-        architecture: 'x86'
-
-    - name: Install dependencies
+  
+    - name: Make release dir
       run: |
-        python -m pip install --upgrade pip
-        pip install pyinstaller
-        pip install wxPython
+        mkdir -p release
 
-    - name: Build EXE
+    - name: Package portable EXE
       run: |
-        rm dist -Recurse -Force
-        pyinstaller --onefile -w -i Assets\icon.ico CustomTextDisplayTool.py
-        pyinstaller -w -i Assets\icon.ico CustomTextDisplayTool.py
+        Compress-Archive -Path Thunder_Professional -DestinationPath release/ThunderProfessional_Portable.zip
+        echo 'Successfully packaged "ThunderProfessional_Portable".'
 
-    - name: Package onefile EXE
-      run: |
-        cd dist
-        Compress-Archive -Path ./CustomTextDisplayTool.exe -DestinationPath ../CustomTextDisplayTool-Onefile.zip
-        echo 'Successfully packaged "CustomTextDisplayTool-Onefile".'
-
-    - name: Upload onefile EXE to GitHub Actions
+    - name: Upload portable EXE to GitHub Actions
       uses: actions/upload-artifact@v4
       with:
-        name: CustomTextDisplayTool-Onefile
-        path: CustomTextDisplayTool-Onefile.zip
+        name: ThunderProfessional_Portable
+        path: release/ThunderProfessional_Portable.zip
 
-    - name: Upload EXE to GitHub Actions
+    - name: Install NSIS
+      run: |
+        Start-Process -FilePath 'NSIS\nsis-3.08-setup.exe' -ArgumentList '/S' -NoNewWindow -Wait
+        echo 'Installed successfully.'
+
+    - name: Create Installer
+      run: |
+        Start-Process -FilePath 'C:/Program Files (x86)/NSIS/makensis.exe' -ArgumentList 'NSIS/Thunder_Professional.nsi' -NoNewWindow -Wait
+        cp -r NSIS/ThunderProfessional_Setup.exe release/
+
+    - name: Upload Installer to GitHub Actions
       uses: actions/upload-artifact@v4
       with:
-        name: CustomTextDisplayTool
-        path: dist/CustomTextDisplayTool/
-
-    - name: Configure SSH
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
-        echo "${{ secrets.SSH_SIGNING_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa.pub
-        icacls ~/.ssh/id_rsa /inheritance:r /grant:r "$($env:USERNAME):(R,W)"
-        icacls ~/.ssh/id_rsa.pub /inheritance:r /grant:r "$($env:USERNAME):(R,W)"
-        ssh-keyscan github.com >> ~/.ssh/known_hosts
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git config --global user.signingkey '~/.ssh/id_rsa.pub'
-        git config --global gpg.format ssh
-        git config --global commit.gpgSign true
-
-    - name: Commit and push the EXE to the repository
-      run: |
-        rm "CustomTextDisplayTool/Bin" -Recurse -Force
-        mkdir -p "CustomTextDisplayTool/Bin"
-        Copy-Item -Path "dist/CustomTextDisplayTool/*" -Destination "CustomTextDisplayTool/Bin" -Recurse -Force
-        ls CustomTextDisplayTool -Recurse -Force
-        git add -v 'dist/CustomTextDisplayTool.exe' 'CustomTextDisplayTool/Bin/' 'CustomTextDisplayTool/Bin/**/'
-        git commit -m "Add generated EXE files"
-        git push git@github.com:WilsonHuangDev/Custom-Text-Display-Tool.git main
-      env:
-        GIT_SSH_COMMAND: 'ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+        name: ThunderProfessional_Installer
+        path: release/ThunderProfessional_Setup.exe
 
   Release:
     runs-on: windows-latest
@@ -84,32 +53,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-  
-    - name: Make release dir
-      run: |
-        mkdir -p release
-  
-    - name: Download Build Artifact CustomTextDisplayTool-Onefile
-      uses: actions/download-artifact@v4.1.8
-      with:
-        name: CustomTextDisplayTool-Onefile
-        path: release
-
-    - name: Install NSIS
-      run: |
-        Start-Process -FilePath 'NSIS\nsis-3.08-setup.exe' -ArgumentList '/S' -NoNewWindow -Wait
-        echo 'Installed successfully.'
-
-    - name: Create Installer
-      run: |
-        Start-Process -FilePath 'C:/Program Files (x86)/NSIS/makensis.exe' -ArgumentList 'NSIS/CustomTextDisplayTool.nsi' -NoNewWindow -Wait
-        cp -r NSIS/CustomTextDisplayTool_Setup.exe release/
-
-    - name: Upload Installer to GitHub Actions
-      uses: actions/upload-artifact@v4
-      with:
-        name: CustomTextDisplayTool-Installer
-        path: release/CustomTextDisplayTool_Setup.exe
 
     - name: Calculate checksums
       run: pwsh .github/workflows/generate-sha256.ps1 release/

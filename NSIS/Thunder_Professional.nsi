@@ -63,7 +63,7 @@ SetCompressor lzma
 ; ------ MUI 现代界面定义结束 ------
 
 Name "${PRODUCT_NAME}"
-OutFile "ThunderProfessional_12.1.2.2662_Setup.exe"
+OutFile "ThunderProfessional_Setup.exe"
 InstallDir "$PROGRAMFILES\Thunder Network\Thunder_Professional"
 InstallDirRegKey HKLM "${PRODUCT_UNINST_KEY}" "UninstallString"
 ShowInstDetails show
