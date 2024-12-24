@@ -13,10 +13,40 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-  
+
+    - name: Install NSIS
+      run: |
+        Start-Process -FilePath 'NSIS\nsis-3.08-setup.exe' -ArgumentList '/S' -NoNewWindow -Wait
+        echo 'Installed successfully.'
+
+    - name: Create Installer
+      run: |
+        Start-Process -FilePath 'C:/Program Files (x86)/NSIS/makensis.exe' -ArgumentList 'NSIS/Thunder_Professional.nsi' -NoNewWindow -Wait
+
+    - name: Upload Installer to GitHub Actions
+      uses: actions/upload-artifact@v4
+      with:
+        name: ThunderProfessional_Installer
+        path: NSIS/ThunderProfessional_Setup.exe
+
+  Release:
+    runs-on: windows-latest
+
+    needs:
+      - Build
+
+    steps:
+    - uses: actions/checkout@v4
+
     - name: Make release dir
       run: |
         mkdir -p release
+
+    - name: Download Build Artifact ThunderProfessional_Installer
+      uses: actions/download-artifact@v4.1.8
+      with:
+        name: ThunderProfessional_Installer
+        path: release
 
     - name: Package portable EXE
       run: |
@@ -29,36 +59,11 @@ jobs:
         name: ThunderProfessional_Portable
         path: release/ThunderProfessional_Portable.zip
 
-    - name: Install NSIS
-      run: |
-        Start-Process -FilePath 'NSIS\nsis-3.08-setup.exe' -ArgumentList '/S' -NoNewWindow -Wait
-        echo 'Installed successfully.'
-
-    - name: Create Installer
-      run: |
-        Start-Process -FilePath 'C:/Program Files (x86)/NSIS/makensis.exe' -ArgumentList 'NSIS/Thunder_Professional.nsi' -NoNewWindow -Wait
-        cp -r NSIS/ThunderProfessional_Setup.exe release/
-
-    - name: Upload Installer to GitHub Actions
-      uses: actions/upload-artifact@v4
-      with:
-        name: ThunderProfessional_Installer
-        path: release/ThunderProfessional_Setup.exe
-
-  Release:
-    runs-on: windows-latest
-
-    needs:
-      - Build
-
-    steps:
-    - uses: actions/checkout@v4
+    - name: Print files from release dir
+      run: ls release -Recurse -Force
 
     - name: Calculate checksums
       run: pwsh .github/workflows/generate-sha256.ps1 release/
-
-    - name: Print files from release dir
-      run: ls release -Recurse -Force
 
     - name: Create Release
       uses: ncipollo/release-action@v1
