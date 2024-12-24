@@ -59,7 +59,7 @@ body:
     id: app_version
     attributes:
       label: 应用版本
-      description: 您当前使用的软件的版本号，可以在 软件主窗口 -> 左下角三条横线 -> 更多 -> 关于迅雷 中查看。
+      description: 您当前使用的软件的版本号，可以在本仓库 [Release](https://github.com/WilsonHuangDev/Thunder-Professional/releases/latest) 中找到您下载的版本查看。
       placeholder: 如：12.1.2.2662
     validations:
       required: true
