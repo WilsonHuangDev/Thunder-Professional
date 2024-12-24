@@ -16,6 +16,9 @@ Bug 修复
 
 **Full Changelog**: 
 
+> [!important]
+> 若电脑已安装原版迅雷，请先卸载原版迅雷再安装本软件。
+
 ------
 > [!important]
 > 下载时请注意核对文件SHA-256是否正确。
