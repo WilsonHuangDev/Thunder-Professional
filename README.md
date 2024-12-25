@@ -29,8 +29,6 @@
 
 ## 联系方式
 
-QQ: 2068364343
-
 邮箱: 2068364343@qq.com
 
 bilibili 主页：[点击访问](https://space.bilibili.com/1056060818)
