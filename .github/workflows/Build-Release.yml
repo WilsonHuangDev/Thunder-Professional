@@ -1,4 +1,4 @@
-name: Build and Release
+name: Build Release
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
     - main
 
 jobs:
-  Build:
+  Build-Release:
     runs-on: windows-latest
 
     steps:
@@ -29,24 +29,10 @@ jobs:
         name: ThunderProfessional_Installer
         path: NSIS/ThunderProfessional_Setup.exe
 
-  Release:
-    runs-on: windows-latest
-
-    needs:
-      - Build
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Make release dir
+    - name: Make release dir and Copy Installer
       run: |
         mkdir -p release
-
-    - name: Download Build Artifact ThunderProfessional_Installer
-      uses: actions/download-artifact@v4.1.8
-      with:
-        name: ThunderProfessional_Installer
-        path: release
+        Copy-Item -Path "NSIS/ThunderProfessional_Setup.exe" -Destination "release/" -Recurse -Force
 
     - name: Package portable EXE
       run: |
