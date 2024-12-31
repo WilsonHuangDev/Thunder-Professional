@@ -5,12 +5,10 @@ rm $path/*.sha-256
 $files = Get-ChildItem $path
 $hashes = [ordered]@{}
 $summary = "
-新增功能与优化
-------
+## 新增功能与优化
 - 
 
-Bug 修复
-------
+## Bug 修复
 - 
 <br>
 
