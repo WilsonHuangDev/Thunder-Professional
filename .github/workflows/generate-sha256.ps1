@@ -14,7 +14,7 @@ Bug 修复
 - 
 <br>
 
-**Full Changelog**: 
+**Full Changelog**: https://github.com/WilsonHuangDev/Thunder-Professional/compare/
 
 > [!important]
 > 若电脑已安装原版迅雷，请先卸载原版迅雷再安装本软件。
