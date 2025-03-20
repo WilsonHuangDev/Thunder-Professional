@@ -3,10 +3,6 @@ name: Build Release
 on:
   workflow_dispatch:
 
-  pull_request:
-    branches:
-    - main
-
 jobs:
   Build-Release:
     runs-on: windows-latest
@@ -14,25 +10,25 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install NSIS
+    - name: Install Inno Setup
       run: |
-        Start-Process -FilePath 'NSIS\nsis-3.08-setup.exe' -ArgumentList '/S' -NoNewWindow -Wait
-        echo 'Installed successfully.'
+        choco install innosetup
+        echo 'Installed Inno Setup successfully.'
 
     - name: Create Installer
       run: |
-        Start-Process -FilePath 'C:/Program Files (x86)/NSIS/makensis.exe' -ArgumentList 'NSIS/Thunder_Professional.nsi' -NoNewWindow -Wait
+        ISCC.exe Installer/Thunder_Professional.iss
 
     - name: Upload Installer to GitHub Actions
       uses: actions/upload-artifact@v4
       with:
         name: ThunderProfessional_Installer
-        path: NSIS/ThunderProfessional_Setup.exe
+        path: Installer/ThunderProfessional_Setup.exe
 
     - name: Make release dir and Copy Installer
       run: |
         mkdir -p release
-        Copy-Item -Path "NSIS/ThunderProfessional_Setup.exe" -Destination "release/" -Recurse -Force
+        Copy-Item -Path "Installer/ThunderProfessional_Setup.exe" -Destination "release/" -Recurse -Force
 
     - name: Package portable EXE
       run: |
