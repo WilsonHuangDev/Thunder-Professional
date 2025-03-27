@@ -2,6 +2,24 @@ name: Build Release
 
 on:
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: '版本发布标签'
+        required: true
+        type: string
+      version:
+        description: '版本名称'
+        required: true
+        type: string
+      release_channel:
+        description: '版本发布通道'
+        required: true
+        type: choice
+        options: [Stable, Beta]
+        default: 'Stable'
+
+env:
+      artifact_name: ThunderProfessional_${{ github.event.inputs.release_tag }}_${{ github.event.inputs.release_channel }}
 
 jobs:
   Build-Release:
@@ -18,37 +36,39 @@ jobs:
     - name: Create Installer
       run: |
         ISCC.exe Installer/Thunder_Professional.iss
+        mv -Path "Installer/ThunderProfessional_Setup.exe" -Destination "Installer/${{ env.artifact_name }}_Setup.exe" -Force
 
     - name: Upload Installer to GitHub Actions
       uses: actions/upload-artifact@v4
       with:
-        name: ThunderProfessional_Installer
-        path: Installer/ThunderProfessional_Setup.exe
+        name: ${{ env.artifact_name }}_Installer
+        path: Installer/${{ env.artifact_name }}_Setup.exe
 
     - name: Make release dir and Copy Installer
       run: |
         mkdir -p release
-        Copy-Item -Path "Installer/ThunderProfessional_Setup.exe" -Destination "release/" -Recurse -Force
+        Copy-Item -Path "Installer/${{ env.artifact_name }}_Setup.exe" -Destination "release/" -Recurse -Force
 
     - name: Package portable EXE
       run: |
-        Compress-Archive -Path Thunder_Professional -DestinationPath release/ThunderProfessional_Portable.zip
-        echo 'Successfully packaged "ThunderProfessional_Portable".'
+        Compress-Archive -Path "Thunder_Professional" -DestinationPath "release/${{ env.artifact_name }}_Portable.zip"
+        echo 'Successfully packaged "${{ env.artifact_name }}_Portable".'
 
     - name: Upload portable EXE to GitHub Actions
       uses: actions/upload-artifact@v4
       with:
-        name: ThunderProfessional_Portable
-        path: release/ThunderProfessional_Portable.zip
-
-    - name: Print files from release dir
-      run: ls release -Recurse -Force
+        name: ${{ env.artifact_name }}_Portable
+        path: release/${{ env.artifact_name }}_Portable.zip
 
     - name: Calculate checksums
-      run: pwsh .github/workflows/generate-sha256.ps1 release/
+      run: |
+        ls release -Recurse -Force
+        pwsh .github/workflows/generate-sha256.ps1 release/
 
     - name: Create Release
       uses: ncipollo/release-action@v1
+      env:
+          IS_PRERELEASE: ${{ github.event.inputs.release_channel == 'Beta' }}
       with:
         artifacts: |
           release/*.zip
@@ -56,7 +76,10 @@ jobs:
         draft: true
         bodyFile: release/checksums.md
         token: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ github.ref_name }}
+        tag: ${{ github.event_name != 'workflow_dispatch' && github.ref || github.event.inputs.release_tag }}
+        name: ${{ github.event.inputs.version }}-${{ github.event.inputs.release_channel }}
+        prerelease: ${{ env.IS_PRERELEASE }}
         allowUpdates: true
         omitBodyDuringUpdate: true
         omitNameDuringUpdate: true
+        omitPrereleaseDuringUpdate: true
