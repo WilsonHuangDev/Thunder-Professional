@@ -15,7 +15,7 @@ on:
         description: '版本发布通道'
         required: true
         type: choice
-        options: [Stable, Beta]
+        options: [Stable, Beta, Dev]
         default: 'Stable'
 
 env:
@@ -66,6 +66,7 @@ jobs:
         pwsh .github/workflows/generate-sha256.ps1 release/
 
     - name: Create Release
+      if: ${{ github.event.inputs.release_channel != 'Dev' }}
       uses: ncipollo/release-action@v1
       env:
           IS_PRERELEASE: ${{ github.event.inputs.release_channel == 'Beta' }}
