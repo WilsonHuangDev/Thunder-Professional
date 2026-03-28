@@ -6,6 +6,8 @@
 
 [![Release](https://img.shields.io/github/v/tag/WilsonHuangDev/Thunder-Professional?style=flat-round&color=%233fb950&label=Release)](https://github.com/WilsonHuangDev/Thunder-Professional/releases/latest)
 
+### ※本软件内核已过时，已停止开发，不再提供技术支持※
+
 <br>
 
 ![软件截图 主界面](Assets/app-image1.png)
@@ -31,7 +33,8 @@
 
 邮箱: 2068364343@qq.com
 
-bilibili 主页：[点击访问](https://space.bilibili.com/1056060818)
+> [!NOTE]
+> **※本软件内核已过时，已停止开发，不再提供技术支持※**
 
 ## 许可证
 
